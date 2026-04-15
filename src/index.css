@@ -19,6 +19,12 @@
     @apply bg-brand-dark text-white font-sans antialiased selection:bg-brand-gold selection:text-black relative;
   }
 
+  @media (min-width: 768px) {
+    * {
+      cursor: none !important;
+    }
+  }
+
   body::before {
     content: "";
     @apply fixed inset-0 z-[-1] opacity-[0.03] pointer-events-none;

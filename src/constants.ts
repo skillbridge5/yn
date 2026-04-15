@@ -34,6 +34,15 @@ export const PERSONAL_INFO = {
 
 export const EXPERIENCES: Experience[] = [
   {
+    company: "AidRigs",
+    role: "ERP Expert",
+    period: "MAR 2026 - Present",
+    description: [
+      "USA Remote - Leading ERP implementation and strategic optimization.",
+      "Architecting intelligent workflows and integrating AI-driven automation into core business processes."
+    ]
+  },
+  {
     company: "AddisSystems PLC",
     role: "ERP Expert & AI Engineer",
     period: "SEP 2025 - Present",

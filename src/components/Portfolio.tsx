@@ -4,6 +4,75 @@ import { Github, Linkedin, Mail, Phone, MapPin, ExternalLink, ChevronRight, Term
 import { cn } from "@/src/lib/utils";
 import { PERSONAL_INFO, EXPERIENCES, PROJECTS, SKILLS, EDUCATION } from "@/src/constants";
 
+export const CustomCursor = () => {
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isClickable = target.closest('a, button, [role="button"]');
+      setIsHovering(!!isClickable);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseover", handleMouseOver);
+    
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseover", handleMouseOver);
+    };
+  }, []);
+
+  return (
+    <>
+      <motion.div
+        className="fixed top-0 left-0 w-8 h-8 border border-brand-gold rounded-full pointer-events-none z-[9999] hidden md:block"
+        animate={{
+          x: mousePos.x - 16,
+          y: mousePos.y - 16,
+          scale: isHovering ? 2.5 : 1,
+          backgroundColor: isHovering ? "rgba(212, 175, 55, 0.1)" : "transparent",
+        }}
+        transition={{ type: "spring", damping: 30, stiffness: 250, mass: 0.5 }}
+      />
+      <motion.div
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-brand-gold rounded-full pointer-events-none z-[9999] hidden md:block"
+        animate={{
+          x: mousePos.x - 3,
+          y: mousePos.y - 3,
+        }}
+        transition={{ type: "spring", damping: 20, stiffness: 500, mass: 0.1 }}
+      />
+    </>
+  );
+};
+
+export const MouseGlow = () => {
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+
+  React.useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <div 
+      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
+      style={{
+        background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.05), transparent 80%)`
+      }}
+    />
+  );
+};
+
 const SectionTitle = ({ children, subtitle }: { children: React.ReactNode; subtitle?: string }) => (
   <div className="mb-12">
     <motion.div
@@ -69,13 +138,15 @@ export const Hero = () => (
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
           </span>
-          Available for new projects
+          AI Agent & ERP Specialist
         </div>
-        <h1 className="text-6xl md:text-8xl font-bold leading-[0.9] mb-8">
-          Crafting <span className="text-gradient">Intelligent</span> ERP Solutions.
+        <h1 className="text-6xl md:text-9xl font-bold leading-[0.85] mb-10 tracking-tighter">
+          Crafting <br />
+          <span className="text-gradient">Intelligent</span> <br />
+          Solutions.
         </h1>
-        <p className="text-lg text-white/60 max-w-xl mb-10 leading-relaxed">
-          I'm <span className="text-white font-medium">{PERSONAL_INFO.name}</span>, a {PERSONAL_INFO.title} based in {PERSONAL_INFO.location}. I bridge the gap between complex business processes and cutting-edge AI.
+        <p className="text-xl text-white/50 max-w-lg mb-12 leading-relaxed font-light">
+          I'm <span className="text-white font-medium">{PERSONAL_INFO.name}</span>. I build autonomous AI agents and high-performance ERP systems that redefine business efficiency.
         </p>
         <div className="flex flex-wrap gap-4">
           <a href="#projects" className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-brand-gold transition-colors flex items-center gap-2">
@@ -96,29 +167,30 @@ export const Hero = () => (
       </motion.div>
       
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.2 }}
+        transition={{ duration: 1.2, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
         className="relative aspect-square hidden lg:block"
       >
-        <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/20 to-transparent rounded-3xl blur-3xl" />
-        <div className="relative h-full w-full glass-card overflow-hidden flex items-center justify-center">
-          <div className="grid grid-cols-2 gap-4 p-8 w-full">
+        <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/30 to-transparent rounded-3xl blur-[120px] animate-pulse" />
+        <div className="relative h-full w-full glass-card overflow-hidden flex items-center justify-center border-white/5">
+          <div className="grid grid-cols-2 gap-6 p-12 w-full">
             {[
-              { icon: Terminal, label: "AI Engineering", color: "text-blue-400" },
-              { icon: Database, label: "ERP Solutions", color: "text-brand-gold" },
-              { icon: Cpu, label: "Data Science", color: "text-purple-400" },
-              { icon: Layout, label: "Odoo Expert", color: "text-emerald-400" },
+              { icon: Cpu, label: "AI Agents", color: "text-blue-400", delay: 0.6 },
+              { icon: Database, label: "ERP Systems", color: "text-brand-gold", delay: 0.7 },
+              { icon: Terminal, label: "Automation", color: "text-purple-400", delay: 0.8 },
+              { icon: Layout, label: "Odoo/ERPNext", color: "text-emerald-400", delay: 0.9 },
             ].map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-                className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center gap-4 text-center"
+                transition={{ delay: item.delay, duration: 0.8, ease: "easeOut" }}
+                whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.08)" }}
+                className="p-8 rounded-3xl bg-white/[0.03] border border-white/5 flex flex-col items-center gap-5 text-center transition-colors"
               >
-                <item.icon className={cn("w-8 h-8", item.color)} />
-                <span className="text-sm font-medium">{item.label}</span>
+                <item.icon className={cn("w-10 h-10", item.color)} />
+                <span className="text-sm font-bold tracking-tight uppercase opacity-80">{item.label}</span>
               </motion.div>
             ))}
           </div>
@@ -129,27 +201,27 @@ export const Hero = () => (
 );
 
 export const Experience = () => (
-  <section id="experience" className="py-24 px-6 max-w-7xl mx-auto">
+  <section id="experience" className="py-32 px-6 max-w-7xl mx-auto">
     <SectionTitle subtitle="Journey">Work Experience</SectionTitle>
-    <div className="space-y-12">
+    <div className="space-y-16">
       {EXPERIENCES.map((exp, i) => (
         <motion.div
           key={i}
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: i * 0.1 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
           className="grid md:grid-cols-[250px_1fr] gap-8 group"
         >
-          <div className="text-white/40 font-mono text-sm pt-1">{exp.period}</div>
-          <div className="relative pl-8 border-l border-white/10 group-hover:border-brand-gold transition-colors">
-            <div className="absolute -left-[5px] top-2 w-2 h-2 rounded-full bg-white/20 group-hover:bg-brand-gold transition-colors" />
-            <h3 className="text-2xl font-bold mb-1">{exp.role}</h3>
-            <div className="text-brand-gold font-medium mb-4">{exp.company}</div>
-            <ul className="space-y-2">
+          <div className="text-white/30 font-mono text-sm pt-1 tracking-widest">{exp.period}</div>
+          <div className="relative pl-12 border-l border-white/5 group-hover:border-brand-gold/30 transition-colors duration-500">
+            <div className="absolute -left-[5px] top-2 w-2 h-2 rounded-full bg-white/10 group-hover:bg-brand-gold group-hover:scale-150 transition-all duration-500" />
+            <h3 className="text-3xl font-bold mb-2 group-hover:text-brand-gold transition-colors duration-500">{exp.role}</h3>
+            <div className="text-brand-gold/80 font-medium text-lg mb-6">{exp.company}</div>
+            <ul className="space-y-4">
               {exp.description.map((desc, j) => (
-                <li key={j} className="text-white/60 flex gap-2">
-                  <span className="text-brand-gold mt-1.5">•</span>
+                <li key={j} className="text-white/50 flex gap-3 leading-relaxed">
+                  <span className="text-brand-gold/40 mt-1.5 shrink-0">•</span>
                   {desc}
                 </li>
               ))}
@@ -189,39 +261,39 @@ export const Education = () => (
 );
 
 export const Projects = () => (
-  <section id="projects" className="py-24 px-6 max-w-7xl mx-auto">
+  <section id="projects" className="py-32 px-6 max-w-7xl mx-auto">
     <SectionTitle subtitle="Portfolio">Featured Projects</SectionTitle>
-    <div className="grid md:grid-cols-2 gap-8">
+    <div className="grid md:grid-cols-2 gap-10">
       {PROJECTS.map((project, i) => (
         <motion.div
           key={i}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: i * 0.1 }}
-          className="glass-card p-8 group hover:bg-white/[0.08] transition-all duration-500"
+          transition={{ duration: 0.8, delay: i * 0.1 }}
+          className="glass-card p-10 group hover:bg-white/[0.06] transition-all duration-700 border-white/5 hover:border-brand-gold/20"
         >
-          <div className="flex justify-between items-start mb-6">
-            <div className="p-3 rounded-xl bg-brand-gold/10 text-brand-gold">
-              {project.title.includes("AI") ? <Cpu size={24} /> : <Database size={24} />}
+          <div className="flex justify-between items-start mb-8">
+            <div className="p-4 rounded-2xl bg-brand-gold/10 text-brand-gold group-hover:scale-110 transition-transform duration-500">
+              {project.title.includes("AI") ? <Cpu size={28} /> : <Database size={28} />}
             </div>
             {project.status && (
-              <span className="text-[10px] uppercase tracking-widest font-bold px-2 py-1 rounded bg-white/10 text-white/60">
+              <span className="text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-white/5 text-white/40 border border-white/5">
                 {project.status}
               </span>
             )}
           </div>
-          <h3 className="text-2xl font-bold mb-3 group-hover:text-brand-gold transition-colors">{project.title}</h3>
-          <p className="text-white/60 mb-6 leading-relaxed">{project.description}</p>
-          <div className="flex flex-wrap gap-2 mb-8">
+          <h3 className="text-3xl font-bold mb-4 group-hover:text-brand-gold transition-colors duration-500 tracking-tight">{project.title}</h3>
+          <p className="text-white/40 mb-8 leading-relaxed text-lg font-light">{project.description}</p>
+          <div className="flex flex-wrap gap-3 mb-10">
             {project.tech.map((t) => (
-              <span key={t} className="text-xs font-mono px-2 py-1 rounded bg-white/5 border border-white/10">
+              <span key={t} className="text-[11px] font-mono px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5 text-white/60">
                 {t}
               </span>
             ))}
           </div>
-          <a href="#" className="inline-flex items-center gap-2 text-sm font-bold text-white group-hover:text-brand-gold transition-colors">
-            View Case Study <ExternalLink size={14} />
+          <a href="#" className="inline-flex items-center gap-3 text-sm font-bold text-white/80 group-hover:text-brand-gold transition-all duration-500 group-hover:gap-5">
+            View Case Study <ExternalLink size={16} />
           </a>
         </motion.div>
       ))}
@@ -230,9 +302,9 @@ export const Projects = () => (
 );
 
 export const Skills = () => (
-  <section id="skills" className="py-24 px-6 max-w-7xl mx-auto">
+  <section id="skills" className="py-32 px-6 max-w-7xl mx-auto">
     <SectionTitle subtitle="Expertise">Technical Skills</SectionTitle>
-    <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
       {[
         { title: "ERP Systems", items: SKILLS.erp, icon: Database },
         { title: "AI & Data", items: SKILLS.ai_data, icon: Cpu },
@@ -242,19 +314,22 @@ export const Skills = () => (
       ].map((category, i) => (
         <motion.div
           key={i}
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: i * 0.1 }}
-          className="p-8 rounded-3xl bg-white/5 border border-white/10"
+          transition={{ duration: 0.6, delay: i * 0.1 }}
+          whileHover={{ y: -10, backgroundColor: "rgba(255,255,255,0.05)" }}
+          className="p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 transition-all duration-500 hover:border-brand-gold/30"
         >
-          <category.icon className="w-8 h-8 text-brand-gold mb-6" />
-          <h3 className="text-xl font-bold mb-6">{category.title}</h3>
-          <div className="space-y-3">
+          <div className="w-16 h-16 rounded-3xl bg-brand-gold/5 flex items-center justify-center text-brand-gold mb-8 group-hover:scale-110 transition-transform">
+            <category.icon size={32} />
+          </div>
+          <h3 className="text-2xl font-bold mb-8 tracking-tight">{category.title}</h3>
+          <div className="space-y-4">
             {category.items.map((skill) => (
-              <div key={skill} className="flex items-center gap-2 text-sm text-white/60">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-gold/40" />
-                {skill}
+              <div key={skill} className="flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300">
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-gold/30" />
+                <span className="text-sm font-medium">{skill}</span>
               </div>
             ))}
           </div>
