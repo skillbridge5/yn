@@ -39,7 +39,7 @@ export const EXPERIENCES: Experience[] = [
     period: "MAR 2026 - Present",
     description: [
       "USA Remote - Leading ERP implementation and strategic optimization.",
-      "Configured Finance, Pos, Inventory, and other core modules",
+      "Configured Finance, Pos, Inventory, and other core modules.",
     ]
   },
   {
@@ -97,7 +97,7 @@ export const EXPERIENCES: Experience[] = [
     description: [
       "Specialized in ERPNext implementation and optimization.",
       "Configured core modules and streamlined business processes using the ERPNext framework.",
-      "Customized custom modules to streamline operations"
+      "Customized custom modules to streamline operations."
     ]
   }
 ];
