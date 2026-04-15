@@ -138,23 +138,29 @@ export const Hero = () => (
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
           </span>
-          AI Agent & ERP Specialist
+          AI Engineer & ERP Specialist
         </div>
-        <h1 className="text-6xl md:text-9xl font-bold leading-[0.85] mb-10 tracking-tighter">
+        <h1 className="text-6xl md:text-8xl font-bold leading-[0.85] mb-10 tracking-[-0.0002em]">
           Crafting <br />
           <span className="text-gradient">Intelligent</span> <br />
           Solutions.
         </h1>
         <p className="text-xl text-white/50 max-w-lg mb-12 leading-relaxed font-light">
-          I'm <span className="text-white font-medium">{PERSONAL_INFO.name}</span>. I build autonomous AI agents and high-performance ERP systems that redefine business efficiency.
+          I'm <span className="text-white font-medium">{PERSONAL_INFO.name}</span>, a ERP Expert, Data Scientist & AI Engineer. I bridge the gap between complex business processes and cutting-edge AI.
         </p>
         <div className="flex flex-wrap gap-4">
           <a href="#projects" className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-brand-gold transition-colors flex items-center gap-2">
             View Projects <ChevronRight size={18} />
           </a>
-          <button className="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2">
+           <a 
+           href='public/Yonas Negese M CV(R).pdf'
+           download="Yonas_Negese_CV.pdf"
+           >
+              <button className="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2">
             Download CV <Download size={18} />
           </button>
+           </a>
+
           <div className="flex items-center gap-4 px-4">
             <a href={PERSONAL_INFO.socials.github} className="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-brand-gold transition-colors">
               <Github size={20} />
@@ -170,14 +176,14 @@ export const Hero = () => (
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-        className="relative aspect-square hidden lg:block"
+        className="relative aspect-square hidden lg:block mt-16"
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/30 to-transparent rounded-3xl blur-[120px] animate-pulse" />
-        <div className="relative h-full w-full glass-card overflow-hidden flex items-center justify-center border-white/5">
-          <div className="grid grid-cols-2 gap-6 p-12 w-full">
+        <div className="relative h-fit w-fit glass-card overflow-hidden flex items-center justify-center border-white/5">
+          <div className="grid grid-cols-2 gap-6 px-24 py-25 w-full">
             {[
               { icon: Cpu, label: "AI Agents", color: "text-blue-400", delay: 0.6 },
-              { icon: Database, label: "ERP Systems", color: "text-brand-gold", delay: 0.7 },
+              { icon: Database, label: "Data Science", color: "text-brand-gold", delay: 0.7 },
               { icon: Terminal, label: "Automation", color: "text-purple-400", delay: 0.8 },
               { icon: Layout, label: "Odoo/ERPNext", color: "text-emerald-400", delay: 0.9 },
             ].map((item, i) => (
@@ -304,13 +310,13 @@ export const Projects = () => (
 export const Skills = () => (
   <section id="skills" className="py-32 px-6 max-w-7xl mx-auto">
     <SectionTitle subtitle="Expertise">Technical Skills</SectionTitle>
-    <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
+    {/* Changed grid-cols-5 to grid-cols-4 to widen the remaining cards */}
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {[
         { title: "ERP Systems", items: SKILLS.erp, icon: Database },
         { title: "AI & Data", items: SKILLS.ai_data, icon: Cpu },
         { title: "Development", items: SKILLS.development, icon: Terminal },
         { title: "Business Tools", items: SKILLS.tools, icon: Layout },
-        { title: "Languages", items: SKILLS.languages, icon: Globe },
       ].map((category, i) => (
         <motion.div
           key={i}
@@ -380,7 +386,7 @@ export const Contact = () => (
           </div>
         </div>
         
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form className="mt-10 space-y-6" onSubmit={(e) => e.preventDefault()}>
           <div className="grid md:grid-cols-2 gap-4">
             <input 
               type="text" 
